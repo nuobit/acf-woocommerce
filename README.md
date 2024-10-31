@@ -1,4 +1,4 @@
-# ACF to WooCommerce REST API
+# ACF WooCommerce
 
 **Version:** 1.0.0<br>
 **Author:** NuoBiT Solutions, S.L.<br>
@@ -42,4 +42,4 @@ Once installed and activated, this plugin will automatically detect ACF repeater
 
 ## GitHub Repository:
 
-[GitHub Repository](https://github.com/nuobit/acf-to-wc-rest-api)
+[NuoBiT's GitHub Repository](https://github.com/nuobit/acf-to-wc-rest-api)
