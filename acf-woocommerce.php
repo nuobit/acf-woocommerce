@@ -36,37 +36,33 @@ function acf_repeater_to_woocommerce_rest_pre_insert_product_object( $product, $
             if ( !isset( $meta['key'] ) || !isset( $meta['value'] ) ) {
                 continue;
             }
-            
-            $field_name = $meta['key'];
-            $post_id = $product->get_id();
 
             // Get the ACF field key based on the field name and post ID
-            $field_key = acf_get_reference( $field_name, $post_id );
+            $field_name = $meta['key'];
+            $field = acf_get_field($field_name);
 
-            if ($field_key) {
-                $field = acf_get_field($field_key);
+            if ($field && $field['type'] == 'repeater') {
+                if (!is_numeric($meta['value'])) {
+                    continue;
+                }
 
-                if ($field['type'] == 'repeater') {
-                    if (!is_numeric($meta['value'])) {
-                        continue;
-                    }
+                $num_rows = intval($meta['value']);
 
-                    $num_rows = intval($meta['value']);
-
-                    if ($num_rows > 0) {
-                        foreach ($field['sub_fields'] as $sub_field) {
-                            $sub_field_name = $sub_field['name'];
-                            for ($count = 0; $count < $num_rows; $count++) {
-                                $additional_meta[] = [
-                                    'key' => "_{$field_name}_{$count}_{$sub_field_name}",
-                                    'value' => $sub_field['key']
-                                ];
-                            }
+                if ($num_rows > 0) {
+                    $additional_meta[] = [
+                        'key' => "_" . $field_name,
+                        'value' => $field['key']
+                    ];
+                    foreach ($field['sub_fields'] as $sub_field) {
+                        for ($count = 0; $count < $num_rows; $count++) {
+                            $additional_meta[] = [
+                                'key' => "_{$field_name}_{$count}_{$sub_field['name']}",
+                                'value' => $sub_field['key']
+                            ];
                         }
-                    } else {
-                        $acf_field = acf_get_field($field_name);
-                        acf_update_value( null, $post_id, $acf_field );
                     }
+                } else {
+                    acf_update_value( null, $product->get_id(), $field );
                 }
             }
         }
