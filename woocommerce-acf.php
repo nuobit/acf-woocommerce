@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: ACF WooCommerce
- * Plugin URI: https://github.com/yourusername/acf-to-wc-rest-api
+ * Plugin Name: WooCommerce ACF
+ * Plugin URI: https://github.com/nuobit/woocommerce-acf
  * Description: Handles updating Advanced Custom Fields (ACF) repeater fields through the WooCommerce REST API.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: NuoBiT Solutions, S.L.
  * Author URI: https://www.nuobit.com/
  * License: GPLv3 or later
- * Text Domain: acf-to-wc-rest-api
+ * Text Domain: woocommerce-acf
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html 
  */
 
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Add a filter to modify the product object before it's inserted via the WooCommerce REST API
-add_filter('woocommerce_rest_pre_insert_product_object', 'acf_repeater_to_woocommerce_rest_pre_insert_product_object', 10, 2);
+add_filter('woocommerce_rest_pre_insert_product_object', 'woocommerce_acf_repeater_rest_pre_insert_product_object', 10, 2);
 
 /**
  * Handles updating ACF repeater fields through the WooCommerce REST API.
@@ -26,7 +26,7 @@ add_filter('woocommerce_rest_pre_insert_product_object', 'acf_repeater_to_woocom
  * @param WP_REST_Request  $request The request object from the REST API.
  * @return WC_Product The modified product object.
  */
-function acf_repeater_to_woocommerce_rest_pre_insert_product_object( $product, $request ) {
+function woocommerce_acf_repeater_rest_pre_insert_product_object( $product, $request ) {
     // Check if 'meta_data' is set and is an array in the request
     if ( isset( $request['meta_data'] ) && is_array( $request['meta_data'] ) ) {
         $meta_data = $request['meta_data'];

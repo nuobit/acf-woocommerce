@@ -1,6 +1,6 @@
-# ACF WooCommerce
+# WooCommerce ACF
 
-**Version:** 1.0.0<br>
+**Version:** 1.0.1<br>
 **Author:** NuoBiT Solutions, S.L.<br>
 **License:** GPLv3 or later
 
